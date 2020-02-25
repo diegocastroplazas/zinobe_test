@@ -1,0 +1,6 @@
+etl:
+  endpoints:
+    regions:
+      url: https://restcountries-v1.p.rapidapi.com/alpha/ru
+      params:
+        
