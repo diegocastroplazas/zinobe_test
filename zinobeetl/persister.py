@@ -1,16 +1,21 @@
 import pymongo
+import os
 import sqlite3
 
 class Persister(object):
     def __init__(self, data):
         self.data_to_persist = data
-        self.mongo_client = pymongo.MongoClient("mongodb://localhost:27017/")
+        if "MONGO_DB_DKR" in os.environ.keys():
+            mongo_url = os.environ["MONGO_DB_DKR"]
+        else:
+            mongo_url = "mongodb://localhost:27017/"
+        self.mongo_client = pymongo.MongoClient(mongo_url)
         self.toMongo()
         self.toJson()
         self.toSqlLite()
 
     def toJson(self):
-        self.data_to_persist.to_json(r'data.json')
+        self.data_to_persist.to_json(r'/usr/src/results/data.json')
         print("Data has been saved to data.json file")
 
     def toSqlLite(self):

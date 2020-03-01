@@ -3,10 +3,16 @@ from bson.json_util import dumps
 from pymongo import MongoClient
 import json
 import uuid
+import os
 
 app = Flask(__name__)
 
-client = MongoClient("mongodb://localhost:27017/")
+if "MONGO_DB_DKR" in os.environ.keys():
+    mongo_url = os.environ["MONGO_DB_DKR"]
+else:
+    mongo_url = "mongodb://localhost:27017/"
+
+client = MongoClient(mongo_url)
 db = client.zinobedb
 
 regions = db.countries

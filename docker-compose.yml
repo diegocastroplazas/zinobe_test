@@ -1,0 +1,26 @@
+version: '3'
+services: 
+    m1:
+        container_name: m1
+        image: mongo
+        ports:
+            - "27017:27017"
+    zinobeetl:
+        container_name: zinobeetl
+        environment: 
+            MONGO_DB_DKR: "mongodb://m1:27017/"
+        build: ./zinobeetl
+        depends_on: 
+            - m1
+        volumes: 
+            - ./datastore:/usr/src/results/
+    zinobeapi:
+        container_name: zinobeapi
+        environment:
+            MONGO_DB_DKR: "mongodb://m1:27017/"
+        build:  ./zinobeapi
+        depends_on:
+            - m1
+            - zinobeetl
+        ports:
+            - "5000:5000"

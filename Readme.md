@@ -4,7 +4,7 @@ Obtener un listado de países y regiones desde  https://restcountries.eu/ y http
 Contabilizar el tiempo procesado.
 Guardar el resultado en sqlite, en JSON File y en MongoDB.
 
-##Solución del ejercicio:
+## Solución del ejercicio:
 
 En la carpeta raíz del proyecto se encuentra el ETL que obtiene los datos de regiones y países. Dicho ETL guarda en JSON File, Mongo y SQLlite el resultado.
 
@@ -12,18 +12,25 @@ Posteriormente en la carpeta zinobeapi se encuentra el servicio web que emula el
 
 ## Instalación.
 
-1. Obtener la imagen de Mongo.
+Para instalar únicamente se debe ejecutar el comando
 
 ```
-docker run -d -p 27017:27017 --name m1 mongo
+docker-compose up
 ```
 
-2. Construir imagen ETL
+## Autenticacion OAUTH2
+
+El API dispone de dos end points que son usados para emular OAUTH2. Para esto se debe consumir de la siguiente forma.
+
+1. Obtener un token:
 ```
-cd zinobeetl && docker build -t zinobeetl . 
+curl --location --request POST '127.0.0.1:5000/api/token/' \
+--header 'Content-Type: multipart/form-data; boundary=--------------------------059353707752847917006718' \
+--form 'owner=admin@zinobe.com'
 ```
 
-3. Construir imagen API
-```
-cd zinobeapi && docker build -t zinobeapi . 
-```
+2. Acceder al servidor de recursos:
+
+curl --location --request GET '127.0.0.1:5000/api/regions/' \
+--header 'owner: admin@zinobe.com' \
+--header 'token: TOKEN_STRING'
