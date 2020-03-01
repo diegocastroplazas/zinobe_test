@@ -30,7 +30,8 @@ curl --location --request POST '127.0.0.1:5000/api/token/' \
 ```
 
 2. Acceder al servidor de recursos:
-
+```
 curl --location --request GET '127.0.0.1:5000/api/regions/' \
 --header 'owner: admin@zinobe.com' \
 --header 'token: TOKEN_STRING'
+```
