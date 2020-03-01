@@ -7,3 +7,4 @@ if __name__ == "__main__":
     getl.getDataKpis()
 
     persist = Persister(getl.dataframe)
+    print("Data de paises preparada satisfactoriamente")
